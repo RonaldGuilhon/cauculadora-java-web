@@ -151,17 +151,17 @@
         <h:form id="calculadoraForm">
             <p:messages id="messages" showDetail="false" showSummary="true" closable="true"/>
             
-            <div class="display">
-                #{calculadoraBean.display}
-            </div>
+            <h:outputText id="displayArea" value="#{calculadoraBean.display}" 
+                         styleClass="display"/>
             
             <div class="botoes-grid">
                 <!-- Primeira linha -->
                 <p:commandButton value="C" 
                                 styleClass="btn-calculadora btn-limpar"
                                 actionListener="#{calculadoraBean.limpar}"
-                                update="calculadoraForm"
-                                process="@this"/>
+                                update="displayArea messages"
+                                process="@this"
+                                immediate="true"/>
                 
                 <p:commandButton value="⌫" 
                                 styleClass="btn-calculadora btn-especial"
