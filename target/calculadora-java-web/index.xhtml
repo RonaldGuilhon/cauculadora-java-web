@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Calculadora Java Web</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .calculadora-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .titulo {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 300;
+        }
+        
+        .display {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: right;
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            word-break: break-all;
+        }
+        
+        .botoes-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .btn-calculadora {
+            height: 60px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .btn-numero {
+            background: #ffffff;
+            color: #333;
+            border: 2px solid #e9ecef;
+        }
+        
+        .btn-numero:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .btn-operacao {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-operacao:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,123,255,0.3);
+        }
+        
+        .btn-especial {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-especial:hover {
+            background: #545b62;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(108,117,125,0.3);
+        }
+        
+        .btn-igual {
+            background: #28a745;
+            color: white;
+            grid-column: span 2;
+        }
+        
+        .btn-igual:hover {
+            background: #1e7e34;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(40,167,69,0.3);
+        }
+        
+        .btn-limpar {
+            background: #dc3545;
+            color: white;
+            grid-column: span 2;
+        }
+        
+        .btn-limpar:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(220,53,69,0.3);
+        }
+        
+        .ui-messages {
+            margin-bottom: 20px;
+        }
+        
+        .ui-messages-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            border-radius: 8px;
+            padding: 10px;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="calculadora-container">
+        <h1 class="titulo">Calculadora Java Web</h1>
+        
+        <h:form id="calculadoraForm">
+            <p:messages id="messages" showDetail="false" showSummary="true" closable="true"/>
+            
+            <div class="display">
+                #{calculadoraBean.display}
+            </div>
+            
+            <div class="botoes-grid">
+                <!-- Primeira linha -->
+                <p:commandButton value="C" 
+                                styleClass="btn-calculadora btn-limpar"
+                                actionListener="#{calculadoraBean.limpar}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <p:commandButton value="⌫" 
+                                styleClass="btn-calculadora btn-especial"
+                                actionListener="#{calculadoraBean.apagarUltimo}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <p:commandButton value="√" 
+                                styleClass="btn-calculadora btn-especial"
+                                actionListener="#{calculadoraBean.calcularRaizQuadrada}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <p:commandButton value="÷" 
+                                styleClass="btn-calculadora btn-operacao"
+                                actionListener="#{calculadoraBean.definirOperacao('/')}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <!-- Segunda linha -->
+                <p:commandButton value="7" 
+                                styleClass="btn-calculadora btn-numero"
+                                actionListener="#{calculadoraBean.adicionarNumero('7')}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <p:commandButton value="8" 
+                                styleClass="btn-calculadora btn-numero"
+                                actionListener="#{calculadoraBean.adicionarNumero('8')}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <p:commandButton value="9" 
+                                styleClass="btn-calculadora btn-numero"
+                                actionListener="#{calculadoraBean.adicionarNumero('9')}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <p:commandButton value="×" 
+                                styleClass="btn-calculadora btn-operacao"
+                                actionListener="#{calculadoraBean.definirOperacao('*')}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <!-- Terceira linha -->
+                <p:commandButton value="4" 
+                                styleClass="btn-calculadora btn-numero"
+                                actionListener="#{calculadoraBean.adicionarNumero('4')}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <p:commandButton value="5" 
+                                styleClass="btn-calculadora btn-numero"
+                                actionListener="#{calculadoraBean.adicionarNumero('5')}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <p:commandButton value="6" 
+                                styleClass="btn-calculadora btn-numero"
+                                actionListener="#{calculadoraBean.adicionarNumero('6')}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <p:commandButton value="−" 
+                                styleClass="btn-calculadora btn-operacao"
+                                actionListener="#{calculadoraBean.definirOperacao('-')}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <!-- Quarta linha -->
+                <p:commandButton value="1" 
+                                styleClass="btn-calculadora btn-numero"
+                                actionListener="#{calculadoraBean.adicionarNumero('1')}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <p:commandButton value="2" 
+                                styleClass="btn-calculadora btn-numero"
+                                actionListener="#{calculadoraBean.adicionarNumero('2')}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <p:commandButton value="3" 
+                                styleClass="btn-calculadora btn-numero"
+                                actionListener="#{calculadoraBean.adicionarNumero('3')}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <p:commandButton value="+" 
+                                styleClass="btn-calculadora btn-operacao"
+                                actionListener="#{calculadoraBean.definirOperacao('+')}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <!-- Quinta linha -->
+                <p:commandButton value="%" 
+                                styleClass="btn-calculadora btn-especial"
+                                actionListener="#{calculadoraBean.calcularPorcentagem}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <p:commandButton value="0" 
+                                styleClass="btn-calculadora btn-numero"
+                                actionListener="#{calculadoraBean.adicionarNumero('0')}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <p:commandButton value="." 
+                                styleClass="btn-calculadora btn-numero"
+                                actionListener="#{calculadoraBean.adicionarPonto}"
+                                update="calculadoraForm"
+                                process="@this"/>
+                
+                <p:commandButton value="=" 
+                                styleClass="btn-calculadora btn-igual"
+                                actionListener="#{calculadoraBean.calcular}"
+                                update="calculadoraForm"
+                                process="@this"/>
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>
