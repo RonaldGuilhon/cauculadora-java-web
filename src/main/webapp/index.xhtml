@@ -54,6 +54,35 @@
             word-break: break-all;
         }
         
+        .display-container {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .display-historico {
+            text-align: right;
+            font-size: 14px;
+            color: #6c757d;
+            min-height: 20px;
+            margin-bottom: 5px;
+            word-break: break-all;
+        }
+        
+        .display-resultado {
+            text-align: right;
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            word-break: break-all;
+        }
+        
         .botoes-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -151,15 +180,19 @@
         <h:form id="calculadoraForm">
             <p:messages id="messages" showDetail="false" showSummary="true" closable="true"/>
             
-            <h:outputText id="displayArea" value="#{calculadoraBean.display}" 
-                         styleClass="display"/>
+            <div class="display-container">
+                <h:outputText id="historicoArea" value="#{calculadoraBean.historico}" 
+                             styleClass="display-historico"/>
+                <h:outputText id="displayArea" value="#{calculadoraBean.display}" 
+                             styleClass="display-resultado"/>
+            </div>
             
             <div class="botoes-grid">
                 <!-- Primeira linha -->
                 <p:commandButton value="C" 
                                 styleClass="btn-calculadora btn-limpar"
                                 actionListener="#{calculadoraBean.limpar}"
-                                update="displayArea messages"
+                                update="historicoArea displayArea messages"
                                 process="@this"
                                 immediate="true"/>
                 

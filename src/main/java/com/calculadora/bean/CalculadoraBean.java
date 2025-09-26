@@ -15,6 +15,7 @@ public class CalculadoraBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String display = "0";
+    private String historico = "";
     private BigDecimal numero1;
     private BigDecimal numero2;
     private String operacao;
@@ -48,6 +49,27 @@ public class CalculadoraBean implements Serializable {
             }
             numero1 = new BigDecimal(display);
             operacao = op;
+            
+            // Atualizar histórico com o número e operação
+            String simboloOperacao = op;
+            switch (op) {
+                case "*":
+                    simboloOperacao = "×";
+                    break;
+                case "/":
+                    simboloOperacao = "÷";
+                    break;
+                case "-":
+                    simboloOperacao = "−";
+                    break;
+                case "+":
+                    simboloOperacao = "+";
+                    break;
+            }
+            
+            historico = display + " " + simboloOperacao + " ";
+            display = "0";
+            
             novaOperacao = true;
         } catch (NumberFormatException e) {
             mostrarErro("Número inválido");
@@ -85,6 +107,9 @@ public class CalculadoraBean implements Serializable {
                     return;
             }
 
+            // Atualizar histórico com o cálculo completo
+            historico = historico + display + " =";
+
             // Remove zeros desnecessários
             if (resultado.stripTrailingZeros().scale() <= 0) {
                 display = resultado.stripTrailingZeros().toPlainString();
@@ -106,6 +131,7 @@ public class CalculadoraBean implements Serializable {
 
     public void limpar() {
         display = "0";
+        historico = "";
         numero1 = null;
         numero2 = null;
         operacao = null;
@@ -165,5 +191,13 @@ public class CalculadoraBean implements Serializable {
 
     public void setDisplay(String display) {
         this.display = display;
+    }
+
+    public String getHistorico() {
+        return historico;
+    }
+
+    public void setHistorico(String historico) {
+        this.historico = historico;
     }
 }
