@@ -1,15 +1,17 @@
 # Calculadora Java Web
 
-Uma calculadora web moderna desenvolvida com Java 8, JSF e PrimeFaces, com tema Blitzer para uma interface elegante e profissional.
+Uma calculadora web moderna desenvolvida com Java 8, JSF e PrimeFaces, com tema Blitzer para uma interface elegante e profissional. A calculadora possui display duplo similar ao Windows, mostrando o histórico das operações e o resultado.
 
 ## Características
 
 - Interface moderna e responsiva com tema **Blitzer**
+- **Display duplo estilo Windows** (histórico + resultado)
 - Operações matemáticas básicas (+, -, ×, ÷)
 - Operações especiais (raiz quadrada, porcentagem)
 - Tratamento de erros
 - Design elegante com visual escuro/metálico
 - Tema PrimeFaces Blitzer 1.0.10
+- **CSS separado** para melhor organização do código
 
 ## Tecnologias Utilizadas
 
@@ -20,6 +22,7 @@ Uma calculadora web moderna desenvolvida com Java 8, JSF e PrimeFaces, com tema 
 - **Maven** para gerenciamento de dependências
 - **Jetty** como servidor embarcado para desenvolvimento
 - **HTML5/CSS3** para interface moderna
+- **Arquitetura de recursos JSF** para organização de assets
 
 ## Funcionalidades
 
@@ -41,6 +44,8 @@ Uma calculadora web moderna desenvolvida com Java 8, JSF e PrimeFaces, com tema 
 - Validação de entrada
 - Mensagens de erro amigáveis
 - Interface responsiva
+- **Display duplo**: Histórico das operações na parte superior e resultado na inferior
+- **Experiência similar ao Windows Calculator**
 
 ## Como Executar
 
@@ -159,6 +164,9 @@ calculadora-java-web/
 │           │   │   └── blitzer-1.0.10.jar
 │           │   ├── web.xml
 │           │   └── faces-config.xml
+│           ├── resources/
+│           │   └── css/
+│           │       └── styles.css
 │           └── index.xhtml
 ├── pom.xml
 └── README.md
@@ -166,8 +174,9 @@ calculadora-java-web/
 
 ## Arquitetura
 
-- **CalculadoraBean**: Managed Bean que contém a lógica de negócio da calculadora
-- **index.xhtml**: Interface do usuário usando componentes PrimeFaces com tema Blitzer
+- **CalculadoraBean**: Managed Bean que contém a lógica de negócio da calculadora e gerencia o histórico das operações
+- **index.xhtml**: Interface do usuário usando componentes PrimeFaces com tema Blitzer e display duplo
+- **resources/css/styles.css**: Arquivo CSS separado com todos os estilos da aplicação
 - **web.xml**: Configuração do servlet JSF e tema PrimeFaces
 - **faces-config.xml**: Configurações adicionais do JSF
 - **blitzer-1.0.10.jar**: Arquivo do tema Blitzer para interface elegante
@@ -181,6 +190,18 @@ calculadora-java-web/
 
 Sinta-se à vontade para contribuir com melhorias, correções de bugs ou novas funcionalidades.
 
+## Melhorias Implementadas
+
+### Display Duplo (Windows-like)
+- **Histórico das operações**: Mostra a sequência completa da operação (ex: "5 + 3 =")
+- **Resultado**: Exibe o valor atual/resultado da operação
+- **Estilo diferenciado**: Histórico em fonte menor e cinza, resultado em fonte maior e negrito
+- **Comportamento similar ao Windows Calculator**
+
+### Organização de Código
+- **CSS separado**: Todos os estilos movidos para `resources/css/styles.css`
+- **Arquitetura JSF padrão**: Uso da estrutura `webapp/resources/` para assets
+- **Melhor manutenibilidade**: Separação clara entre lógica, apresentação e estilos
 ## Licença
 
 Este projeto é de uso livre para fins educacionais e de aprendizado.
